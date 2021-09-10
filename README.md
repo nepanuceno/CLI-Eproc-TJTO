@@ -25,3 +25,8 @@ No exemplo de utilização acima, o cli irá gerar os arquivo com as suas respec
 
 #### Exemplo:
 ```class ProcessoMPDTO extends ExemploDTO {...}```
+
+Caso as classes a serem geradas não necessitem serem extendidas de outras classes do core do Eproc,
+basta omitir a opção **-x NomeDaClasse**
+Lembrando que a opção **-i foo** também é opcional, caso você descida não acrescentar um sufixo no seu
+módulo ao nome das classes e suas respectivas variáveis.
