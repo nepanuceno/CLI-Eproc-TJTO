@@ -6,8 +6,8 @@ if ($argc == 2) {
   if ($argv[1] == '-h') {
     echo "Options:
           -i: Initials (MP, DPE, TJTO, TRF4 etc) Opcional
-          -n: Name - Obrigatorio
-          -x: Extends Class - (Ex: class ProcessoMPDTO extends ProcessoDTO)
+          -n: Name - Obrigatório
+          -x: Extends Class - (Ex: class ProcessoMPDTO extends ProcessoDTO) - Opcional
           -h: Help
   ".PHP_EOL;
 
@@ -19,8 +19,6 @@ if ($argc == 2) {
 $options = array('-i','-n', '-x');
 $dirs = array('dto','rn', 'int', 'bd');
 $flags = false; //FILE_APPEND;
-
-// var_dump(count(array_diff($argv, $options))-1) or die();
 
 
 if (count(array_diff($argv, $options))-1 > (($argc-1)/2)) {
