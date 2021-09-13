@@ -2,17 +2,42 @@
 
 <?php
 
+function colorLog($str, $type = 'i'){
+  switch ($type) {
+      case 'e': //error
+          echo "\033[31m$str \033[0m\n";
+      break;
+      case 's': //success
+          echo "\033[32m$str \033[0m\n";
+      break;
+      case 'w': //warning
+          echo "\033[33m$str \033[0m\n";
+      break;  
+      case 'i': //info
+          echo "\033[36m$str \033[0m\n";
+      break;      
+      default:
+      # code...
+      break;
+  }
+}
+
+echo "\e[0;37;44m                   \e[0m\n";
+echo "\e[0;37;44m     EPROC CLI     \e[0m\n";
+echo "\e[0;37;44m                   \e[0m\n";
+
 if ($argc == 2) {
   if ($argv[1] == '-h') {
-    echo "Options:
+    colorLog("Options:
           -i: Initials (MP, DPE, TJTO, TRF4 etc) Opcional
           -n: Name - Obrigatório
           -x: Extends Class - (Ex: class ProcessoMPDTO extends ProcessoDTO) - Opcional
           -h: Help
-  ".PHP_EOL;
+  ".PHP_EOL,'i');
 
-  echo "Exemplo de uso:".PHP_EOL;
-  echo "./eprocli.php -i MP -n Processo -x Processo";
+  colorLog("Exemplo de uso:".PHP_EOL,'w');
+  colorLog("./eprocli.php -i MP -n Processo -x Processo".PHP_EOL,'i');
+  die();
   }
 }
 
@@ -34,12 +59,12 @@ if (count(array_diff($argv, $options))-1 > (($argc-1)/2)) {
 
 
 if ($argc == 1) {
-  echo "Faltam de parâmetros!".PHP_EOL;
+  colorLog("Faltam de parâmetros!",'e');
   die();
 }
 
 if ($argc == 2) {
-  echo "Falta de parâmetros!".PHP_EOL."Verifique a presença do identificador '-n' ou o seu valor, caso o identificador esteja presente.".PHP_EOL;
+  colorLog("Falta de parâmetros!".PHP_EOL."Verifique a presença do identificador '-n' ou o seu valor, caso o identificador esteja presente.".PHP_EOL,'e');
   die();
 }
 
@@ -54,7 +79,7 @@ if ($argc == 6) {
 }
 
 if ($argc > 7) {
-  echo "Excesso de parâmetros!".PHP_EOL;
+  colorLog("Excesso de parâmetros!".PHP_EOL,'e');
   die();
 } 
 
@@ -80,7 +105,7 @@ if ($argv[$tag_index] == '-n') {
   $file_name = $argv[$tag_index + 1];
 } 
 
-if ($argc == 7 || $argc == 5) {
+if ($argc == 7 || $argc == 5  | $argc == 3) {
   $initial_name = null;
   $tag_index = array_search('-i', $argv) ?? '';
   if ($argv[$tag_index] == '-i') {
@@ -117,12 +142,12 @@ foreach ($dirs as $dir) {
 
   if ($extend_class_name != 'Infra') {
     $montar = 'parent::montar();';
-    $table_name_dto = "public function getStrNomeTabela() {
-        return '#add_table_name';
-      }";
+    $table_name_dto = '';
   } else {
     $montar = '';
-    $table_name_dto = '';
+    $table_name_dto = "public function getStrNomeTabela() {
+      return '#add_table_name';
+    }";
   }
 
   if ($dir == 'bd') {
@@ -403,3 +428,8 @@ foreach ($dirs as $dir) {
   }//End If
 
 }//End For
+
+
+echo "\e[0;37;42m                               \e[0m\n";
+echo "\e[0;37;42m;     Finished successfully    \e[0m\n";
+echo "\e[0;37;42m                               \e[0m\n";
